@@ -1,0 +1,95 @@
+.orderlist-wrapper {
+    width: min(900px, 100%);
+    height: 90px;
+    background-color: #f1f3f5;
+    margin: 7px auto;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    display: grid;
+    grid-template-columns: 95px 32% 1fr;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.orderlist-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.orderlist-desc {
+    width: 100%;
+    height: 100%;
+    font-size: 17px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.orderlist-group {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.orderlist-top {
+    width: 100%;
+    height: 65px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 6px 10px;
+    overflow: hidden;
+}
+
+.orderlist-price {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.orderlist-wrapper .bx-trash {
+    font-size: 30px;
+    color: var(--pink);
+    cursor: pointer;
+}
+
+.control-buttons {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.control-buttons button {
+    width: 25px;
+    height: 25px;
+    border-radius: 6px;
+    background-color: var(--pink);
+    color: white;
+    border: 0;
+    outline: 0;
+    display: grid;
+    place-content: center;
+}
+
+
+@media only screen and (max-width: 576px) {
+    .orderlist-price {
+        font-size: 14px;
+    }
+
+    .orderlist-desc {
+        font-size: 14px;
+    }
+
+    .orderlist-desc p {
+        display: none;
+    }
+
+    .orderlist-wrapper .bx-trash {
+        font-size: 21px;
+    }
+}
