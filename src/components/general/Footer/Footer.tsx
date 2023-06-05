@@ -4,28 +4,31 @@ import ErrorModal from '../../../modals/Error';
 import NewsletterSuccess from "../../../modals/NewsletterSuccess";
 import Spinner from '../../../utilities/Spinner';
 import "./Footer.css";
+import { useStoreContext } from '../../../contexts/StoreContext';
+import { useAdminContext } from '../../../contexts/AdminContext';
 
 
 export default function Footer() {
 
-    const [isLoading, setIsLoading] = useState("")
+    const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState("")
 
     // Ref for newsletter input
-    const newsLetterRef = useRef(null);
-    const userEmailRef = useRef(null);
+    const newsLetterRef = useRef<null | HTMLFormElement>(null);
+    const userEmailRef = useRef<null | HTMLInputElement>(null);
 
     // ** Welcome admin values
-    const { isNewsLetterSuccess, setIsNewsLetterSuccess } = useContext();
+    const { isNewsLetterSuccess, setIsNewsLetterSuccess } = useStoreContext();
+    const { token } = useAdminContext();
 
     // ** Handle submit newsletter
-    async function handleSubmit(e) {
+    async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
 
         setIsLoading(true)
 
         const myHeaders = new Headers();
-        myHeaders.append("apiKey", apiKey);
+        myHeaders.append("apiKey", token);
         myHeaders.append("Content-Type", "application/json");
 
         const raw = JSON.stringify({
@@ -36,26 +39,28 @@ export default function Footer() {
             method: 'POST',
             headers: myHeaders,
             body: raw,
-            redirect: 'follow'
         };
 
-        if (userEmailRef.current.value) {
-            await fetch(`${baseUrl}/api/v1/subscription/subcribe`, requestOptions)
-                .then(response => response.json())
-                .then(result => {
-                    if (result.responseDto.code === "dkss") {
-                        setIsLoading(false)
-                        newsLetterRef.current?.reset()
-                        setIsNewsLetterSuccess(true);
-                    } else {
-                        setIsLoading(false)
-                        setError(result.responseDto.message)
-                    }
-                })
-                .catch(error => {
-                    setIsLoading(false)
-                    setError('Cannot connect to server')
-                });
+        if (userEmailRef.current?.value) {
+            await fetch(
+              `${import.meta.env.VITE_BASEURL}/api/v1/subscription/subcribe`,
+              requestOptions
+            )
+              .then((response) => response.json())
+              .then((result) => {
+                if (result.responseDto.code === "dkss") {
+                  setIsLoading(false);
+                  newsLetterRef.current?.reset();
+                  setIsNewsLetterSuccess(true);
+                } else {
+                  setIsLoading(false);
+                  setError(result.responseDto.message);
+                }
+              })
+              .catch(() => {
+                setIsLoading(false);
+                setError("Cannot connect to server");
+              });
         }
 
 
@@ -113,8 +118,8 @@ export default function Footer() {
                 </div>
             </footer>
             {isNewsLetterSuccess && <NewsletterSuccess />}
-            {isLoading && <Spinner />}
-            {error && <ErrorModal Error={error} callback={setError} />}
+            {isLoading && <Spinner animationType='grow' />}
+            {error && <ErrorModal errorMsg={error} callbackFunction={setError} />}
         </div>
     )
 }

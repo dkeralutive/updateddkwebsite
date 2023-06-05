@@ -2,7 +2,7 @@ import "./Modals.css";
 import {useStoreContext} from "../contexts/StoreContext"
 
 export default function NewsletterSuccess() {
-  const {  } = useStoreContext();
+  const { setIsNewsLetterSuccess } = useStoreContext();
 
   function handleClick() {
     setIsNewsLetterSuccess(false);
@@ -15,6 +15,7 @@ export default function NewsletterSuccess() {
       !target.classList.contains("modal-card-header") &&
       !target.classList.contains("modal-card-icon") &&
       !target.classList.contains("modal-card-subtitle")
+      
     ) {
       return setIsNewsLetterSuccess(false);
     } else {

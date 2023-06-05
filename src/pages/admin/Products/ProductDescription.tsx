@@ -9,8 +9,7 @@ import AdminTitleBar from "../../../components/admin/Titlebar/TitleBar";
 import ErrorModal from "../../../modals/Error";
 import formatCurrency from "../../../utilities/FormatCurrency";
 import "./Product.css";
-import useContext from "../../../hooks/useContext";
-import { AdminContext } from "../../../contexts/AdminContext";
+import { useAdminContext } from "../../../contexts/AdminContext";
 import { productDescriptionProps } from "../../../types/contexts";
 import isString from "../../../utilities/isString";
 
@@ -109,7 +108,7 @@ export default function ProductDescription() {
     setProductDescription,
     productCategories,
     token,
-  } = useContext(AdminContext);
+  } = useAdminContext();
 
   // ** Functions to toggle offcanvas on and off
   const handleClose = () => setShow(false);

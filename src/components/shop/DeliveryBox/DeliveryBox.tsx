@@ -1,6 +1,12 @@
-import "../../css/shop/DeliveryBox.css"
+import "./DeliveryBox.css";
 
-export default function DeliveryBox({ title, label, image }) {
+interface DeliveryBoxProps {
+  title: string;
+  label: string;
+  image: string;
+}
+
+export default function DeliveryBox({ title, label, image }: DeliveryBoxProps) {
   return (
     <div
       style={{ backgroundImage: `url(${image})` }}

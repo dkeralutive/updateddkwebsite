@@ -1,4 +1,3 @@
-import React from 'react'
 import { HashLink } from 'react-router-hash-link'
 import mobileView from '../../../utilities/mobileView'
 import { Col, Row } from 'react-bootstrap'

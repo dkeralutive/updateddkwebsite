@@ -2,8 +2,7 @@ import { useRef, useState } from "react";
 import Spinner from "../../../utilities/Spinner";
 import { useNavigate } from "react-router-dom";
 import "./login.css";
-import useContext from "../../../hooks/useContext";
-import { AdminContext } from "../../../contexts/AdminContext";
+import { useAdminContext } from "../../../contexts/AdminContext";
 import AdminLoginError from "../../../modals/AdminLoginError";
 
 export default function Login() {
@@ -18,7 +17,7 @@ export default function Login() {
   const navigate = useNavigate();
 
   // ** Welcome context values
-  const { loginStates, setLoginStates, setToken } = useContext(AdminContext);
+  const { loginStates, setLoginStates, setToken } = useAdminContext();
 
   // ** Create refs
   const formRefer = useRef<null | HTMLFormElement>(null);

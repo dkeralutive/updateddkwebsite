@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Card, Container, Nav, Navbar, Offcanvas } from 'react-bootstrap';
 import Carousel from 'react-multi-carousel';
 import { NavLink, useNavigate } from 'react-router-dom';
 import Data from "../../../Data.json";
 import Footer from "../../../components/general/Footer/Footer";
-import DeliveryBox from '../../../components/shop/DeliveryBox';
-import SoftwareAd from '../../../components/shop/SoftwareAd';
-import mobileView from '../../../utilities/mobileView';
 import "./home.css";
+import DeliveryBox from '../../../components/shop/DeliveryBox/DeliveryBox';
+import SoftwareAd from '../../../components/shop/SoftwareAd/SoftwareAds';
+import mobileView from '../../../utilities/mobileView';
 
 export default function Home() {
   const [activeNav, setActiveNav] = useState("home");

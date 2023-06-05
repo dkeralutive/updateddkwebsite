@@ -1,5 +1,4 @@
-import { AdminContext } from "../contexts/AdminContext";
-import useContext from "../hooks/useContext";
+import { useAdminContext } from "../contexts/AdminContext";
 import "./Modals.css";
 
 
@@ -8,7 +7,7 @@ type AdminLoginErrorProp = {
 };
 
 export default function AdminLoginError({ loginError }: AdminLoginErrorProp) {
-  const { setLoginStates } = useContext(AdminContext);
+  const { setLoginStates } = useAdminContext();
 
   function handleClick() {
     setLoginStates((prev) => {

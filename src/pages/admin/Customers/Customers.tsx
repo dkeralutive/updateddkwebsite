@@ -2,8 +2,7 @@
 import { useEffect, useState } from 'react';
 import Sidebar from '../../../components/admin/Sidebar/Sidebar';
 import AdminTitleBar from '../../../components/admin/Titlebar/TitleBar';
-import useContext from '../../../hooks/useContext';
-import { AdminContext } from '../../../contexts/AdminContext';
+import { useAdminContext } from '../../../contexts/AdminContext';
 import Spinner from '../../../utilities/Spinner';
 import ErrorModal from '../../../modals/Error';
 import { adminCustomerProps } from '../../../types/contexts';
@@ -57,7 +56,7 @@ const AdminCustomers = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   // Welcome context contextValues
-  const { customers, setCustomers, token } = useContext(AdminContext)
+  const { customers, setCustomers, token } = useAdminContext()
 
   // ** Get unique values for userType from customer array
   const userTypeArray = Array.from(new Set(customers.map(customer => customer.userType)))
@@ -192,6 +191,8 @@ const AdminCustomers = () => {
           </div>
         </div>
       </div>
+
+      
       {error && <ErrorModal errorMsg={error} callbackFunction={setError} />}
       {isLoading && <Spinner animationType='grow' />}
     </main>

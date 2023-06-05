@@ -63,6 +63,26 @@ export interface adminCustomerProps {
   id: string;
 }
 
+export interface StoreItemProps {
+  id: number;
+  name: string;
+  price: number;
+  itemImage: string[];
+  description: string;
+  stockQuantity: number;
+  size: number;
+  prevLink: string;
+  rating: number;
+  productDescription: string;
+  keyIngredient: string;
+  howToApply: string;
+}
+
+export interface CartItemProps {
+  id: number;
+  qty: number;
+}
+
 // Admin stock response props
 export interface stockProps {
   id: number;
@@ -74,6 +94,20 @@ export interface stockProps {
   productCategoryCode: string;
   stockStatus: boolean;
   stockCode: string;
+}
+
+export interface PropertyStoreProps {
+    id: number;
+    title: string;
+    location: string;
+    price: number;
+    roomCount: number;
+    toiletCount: number;
+    images: string[];
+    desc: string;
+    is3d: boolean;
+    navLink: string;
+    listDesc: string[];
 }
 
 export interface AdminContextProps {

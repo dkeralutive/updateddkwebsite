@@ -5,8 +5,7 @@ import { BsArrowLeft, BsArrowRight, BsUpload } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import Sidebar from "../../../components/admin/Sidebar/Sidebar";
 import AdminTitleBar from "../../../components/admin/Titlebar/TitleBar";
-import { AdminContext } from "../../../contexts/AdminContext";
-import useContext from "../../../hooks/useContext";
+import { useAdminContext } from "../../../contexts/AdminContext";
 import { stockProps } from "../../../types/contexts";
 import "./stock.css";
 import ErrorModal from "../../../modals/Error";
@@ -87,7 +86,7 @@ const AdminStock = () => {
 
   // Welcome context values
   const { stockList, setStockList, productDescription, token } =
-    useContext(AdminContext);
+    useAdminContext();
 
   // ** Functions to toggle offcanvas on and off
   const handleClose = () => setShow(false);

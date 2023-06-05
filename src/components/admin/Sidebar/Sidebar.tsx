@@ -7,8 +7,7 @@ import { MdOutlineDescription } from "react-icons/md";
 import { SlCompass } from "react-icons/sl";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import "./Sidebar.css";
-import useContext from "../../../hooks/useContext";
-import { AdminContext } from "../../../contexts/AdminContext";
+import { useAdminContext } from "../../../contexts/AdminContext";
 
 const ACTIVE = {
   Dashboard: "dashboard",
@@ -32,7 +31,7 @@ export default function Sidebar({ active }: sideBarProps) {
   // For the product dropdown
   const [dropdown, setDropdown] = useState("none");
 
-  const {setLoginStates, setToken} = useContext(AdminContext)
+  const {setLoginStates, setToken} = useAdminContext()
 
   const navigate = useNavigate()
 

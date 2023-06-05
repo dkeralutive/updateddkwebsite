@@ -5,8 +5,7 @@ import { BsArrowLeft, BsArrowRight, BsUpload } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import Sidebar from "../../../components/admin/Sidebar/Sidebar";
 import AdminTitleBar from "../../../components/admin/Titlebar/TitleBar";
-import { AdminContext } from "../../../contexts/AdminContext";
-import useContext from "../../../hooks/useContext";
+import {useAdminContext } from "../../../contexts/AdminContext";
 import ErrorModal from "../../../modals/Error";
 import { productCategoryProps } from "../../../types/contexts";
 import Spinner from "../../../utilities/Spinner";
@@ -81,7 +80,7 @@ export default function ProductCategory() {
 
   // Import values from admin context
   const { token, productCategories, setProductCategories } =
-    useContext(AdminContext);
+    useAdminContext();
 
   // Filter all product categories array according to selectValue
   const filteredProdCat =

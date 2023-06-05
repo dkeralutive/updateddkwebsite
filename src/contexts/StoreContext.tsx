@@ -1,36 +1,48 @@
 /* eslint-disable react-refresh/only-export-components */
-import { createContext, useState, useContext } from "react";
-import { contextProvider } from "../types/contexts";
+import { createContext, useContext, useState } from "react";
+import { CartItemProps, StoreItemProps, contextProvider } from "../types/contexts";
 
 export interface StoreContextProps {
   isNewsLetterSuccess: boolean;
   setIsNewsLetterSuccess: React.Dispatch<React.SetStateAction<boolean>>;
+
+  isOrderSuccess: boolean;
+  setIsOrderSuccess: React.Dispatch<React.SetStateAction<boolean>>;
+
+  isMailSuccess: boolean;
+  setIsMailSuccess: React.Dispatch<React.SetStateAction<boolean>>;
+
+  cartCount: () => number;
+
+  getStoreItem: (id: number, store: StoreItemProps[]) => void
 }
 
 const StoreContext = createContext({} as StoreContextProps);
 
 export function useStoreContext() {
-    useContext(StoreContext);
+  return useContext(StoreContext);
 }
-
 
 export function StoreContextProvider({ children }: contextProvider) {
   //     // MODALS
   const [isNewsLetterSuccess, setIsNewsLetterSuccess] = useState(false);
+  const [isOrderSuccess, setIsOrderSuccess] = useState(false);
+  const [isMailSuccess, setIsMailSuccess] = useState(false);
 
-  // const [isOrderSuccess, setIsOrderSuccess] = useState(false);
   // const [isPaymentSuccess, setIsPaymentSuccess] = useState(false);
-  // const [isMailSuccess, setIsMailSuccess] = useState(false);
 
   // // Store State
-  // const [cartItems, setCartItems] = useState([]);
-  // const [selectedItem, setSelectedItem] = useState({});
+  const [cartItems, setCartItems] = useState<CartItemProps[]>([]);
+  const [selectedItem, setSelectedItem] = useState<StoreItemProps>(
+    {} as StoreItemProps
+  );
+  
 
   // // Get store item for art&craft and fashion as a joint store
-  // function getStoreItem(id, store) {
-  //     const propObj = store.find((item) => item.id === id);
-  //     return setSelectedItem(propObj);
-  // }
+  function getStoreItem(id: number, store: StoreItemProps[]) {
+      const propObj = store.find((item) => item.id === id);
+      if (propObj) return setSelectedItem(propObj);
+  }
 
   // // Add to cart
   // function addToCart(id, product) {
@@ -50,8 +62,11 @@ export function StoreContextProvider({ children }: contextProvider) {
   // }
 
   // // OrderCount appearing in the FashionNavbar is the cart count of selected items
-  // const cartQtys = cartItems.map(item => item.qty)
-  // const orderCount = cartQtys.reduce((acc, el) => acc + el, 0)
+  function cartCount() {
+    const cartQtys = cartItems.map((item) => item.qty);
+    const orderCount = cartQtys.reduce((acc, el) => acc + el, 0);
+    return orderCount;
+  }
 
   // // Increment orderCount
   // function increaseOrderCount(id) {
@@ -63,15 +78,17 @@ export function StoreContextProvider({ children }: contextProvider) {
   const contextValues = {
     isNewsLetterSuccess,
     setIsNewsLetterSuccess,
+    isOrderSuccess,
+    setIsOrderSuccess,
+    cartCount,
+    isMailSuccess,
+    setIsMailSuccess,
+    getStoreItem,
+
     // isPaymentSuccess,
     // setIsPaymentSuccess,
-    // isOrderSuccess,
-    // setIsOrderSuccess,
-    // isMailSuccess,
-    // setIsMailSuccess,
     // orderCount,
     // addToCart,
-    // getStoreItem,
     // selectedItem,
     // cartItems,
     // increaseOrderCount,

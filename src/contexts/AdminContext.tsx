@@ -1,4 +1,5 @@
-import { createContext, useState } from "react";
+/* eslint-disable react-refresh/only-export-components */
+import { createContext, useState, useContext } from "react";
 import useLocalStorage from "use-local-storage";
 import {
   AdminContextProps,
@@ -11,6 +12,10 @@ import {
 } from "../types/contexts";
 
 const AdminContext = createContext({} as AdminContextProps);
+
+export function useAdminContext() {
+  return useContext(AdminContext);
+}
 
 const AdminContextProvider = ({ children }: contextProvider) => {
   // ** States for staff login

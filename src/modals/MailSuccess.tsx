@@ -9,13 +9,13 @@ export default function MailSuccess() {
     setIsMailSuccess(false)
   }
 
-  function closeModal(e) {
-
+  function closeModal(e: React.MouseEvent<HTMLDivElement>) {
+    const target = e.target as HTMLDivElement;
     if (
-      !e.target.classList.contains("modal-card") &&
-      !e.target.classList.contains("modal-card-header") &&
-      !e.target.classList.contains("modal-card-icon") &&
-      !e.target.classList.contains("modal-card-subtitle")
+      !target.classList.contains("modal-card") &&
+      !target.classList.contains("modal-card-header") &&
+      !target.classList.contains("modal-card-icon") &&
+      !target.classList.contains("modal-card-subtitle")
     ) {
       return setIsMailSuccess(false);
     } else {
