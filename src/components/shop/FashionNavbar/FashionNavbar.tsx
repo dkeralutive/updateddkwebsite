@@ -11,7 +11,7 @@ import "./FashionNavbar.css";
 export default function FashionNavbar({ activeLink }: { activeLink: string }) {
   const [active, setActive] = useState(activeLink);
 
-  const { cartCount } = useStoreContext();
+  const { cartQty } = useStoreContext();
 
   const navigate = useNavigate();
   return (
@@ -74,7 +74,7 @@ export default function FashionNavbar({ activeLink }: { activeLink: string }) {
             alt="lock"
             onClick={() => navigate("/order")}
           />
-          <span className="cart-notification-count">{cartCount()}</span>
+          <span className="cart-notification-count">{cartQty}</span>
         </Navbar.Text>
         <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-sm`} />
       </Container>

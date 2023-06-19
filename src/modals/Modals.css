@@ -65,3 +65,17 @@
 .modal-card p span {
     font-weight: 600;
 }
+
+
+.modal-page-container {
+    width: 100vw;
+    height: 100Vh;
+    background-color: #e7e7e73d;
+    position: fixed;
+    left: 0;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}

@@ -26,7 +26,8 @@ export default function Lands() {
   const [error, setError] = useState("");
 
   const { token } = useAdminContext();
-  const { state, currentPage, propertyPrice } = usePropertyContext();
+  const { state, currentPage, propertyPrice, setUnboardingFrom } =
+    usePropertyContext();
 
   async function getLandProperties() {
     const myHeaders = new Headers();
@@ -65,6 +66,10 @@ export default function Lands() {
   useEffect(() => {
     getLandProperties();
   }, [state, propertyPrice]);
+
+  useEffect(() => {
+    setUnboardingFrom("Lands");
+  }, []);
 
   return (
     <div>

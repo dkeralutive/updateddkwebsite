@@ -1,5 +1,5 @@
-import React from 'react';
-import { Bar, BarChart, Tooltip, XAxis, YAxis } from 'recharts';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Bar, BarChart, XAxis, YAxis } from 'recharts';
 
 const data = [
     { name: "12 Jan", art: 32, fashion: 37 },
@@ -22,42 +22,50 @@ export default function DashboardBarChart() {
                 <Bar dataKey="fashion" barSize={30} fill="#71717A" />
                 <XAxis dataKey="name" />
                 <YAxis />
-                <Tooltip content={ToolTipStyle} />
+                {/* <Tooltip content={ToolTipStyle} /> */}
             </BarChart>
         </div>
     )
 }
 
 // Styles for recharts tool tip
-const divStyle = {
-    color: 'white',
-    backgroundColor: '#081735',
-    borderRadius: "6px",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    padding: "5px 14px",
-    gap: "4px",
-};
-const pStyle = {
-    display: "flex",
-    justifyContent: "flex-start",
-    alignItems: "center",
-    gap: "5px",
-};
+// const divStyle = {
+//     color: 'white',
+//     backgroundColor: '#081735',
+//     borderRadius: "6px",
+//     display: "flex",
+//     justifyContent: "center",
+//     alignItems: "center",
+//     padding: "5px 14px",
+//     gap: "4px",
+// };
+// const pStyle = {
+//     display: "flex",
+//     justifyContent: "flex-start",
+//     alignItems: "center",
+//     gap: "5px",
+// };
 
 
-function ToolTipStyle({ active, payload }) {
-    if (active && payload && payload.length) {
-        return <div style={divStyle}>
-            <div className="label">
-                <p style={pStyle}>{`Art = ${payload[0].value}%`}<i className="bx bx-up-arrow-alt" /></p>
-                <p style={pStyle}>{`Fashion = ${payload[1].value}%`}<i className="bx bx-up-arrow-alt" /></p>
-            </div>
-        </div>
-    }
-    return null
-}
+// function ToolTipStyle({ active, payload }: { active: any, payload: any }) {
+//   if (active && payload && payload.length) {
+//     return (
+//       <div style={divStyle}>
+//         <div className="label">
+//           <p style={pStyle}>
+//             {`Art = ${payload[0].value}%`}
+//             <i className="bx bx-up-arrow-alt" />
+//           </p>
+//           <p style={pStyle}>
+//             {`Fashion = ${payload[1].value}%`}
+//             <i className="bx bx-up-arrow-alt" />
+//           </p>
+//         </div>
+//       </div>
+//     );
+//   }
+//   return null;
+// }
 
 // const getIntroOfPage = (label) => {
 //     if (label === 2017) {

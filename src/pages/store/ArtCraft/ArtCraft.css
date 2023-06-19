@@ -1,5 +1,5 @@
 .artCraft-main {
-    background-image: url("/public/images/art-work-bg-img.png");
+    background-image: url("/images/art-work-bg-img.png");
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -191,7 +191,7 @@
 }
 
 .art-img-card-left {
-    background: linear-gradient(0deg, #090914 0%, rgba(9, 9, 20, 0) 98.51%), url("/public/images/art-cat-1.png");
+    background: linear-gradient(0deg, #090914 0%, rgba(9, 9, 20, 0) 98.51%), url("/images/art-cat-1.png");
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -235,7 +235,7 @@
 }
 
 .art-img-card-right {
-    background: linear-gradient(0deg, #090914 0%, rgba(9, 9, 20, 0) 98.51%), url("/public/images/art-cat-2.png");
+    background: linear-gradient(0deg, #090914 0%, rgba(9, 9, 20, 0) 98.51%), url("/images/art-cat-2.png");
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;

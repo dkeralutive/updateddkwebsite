@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 import { Bar, BarChart } from 'recharts';
 
 const data = [

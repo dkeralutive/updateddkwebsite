@@ -82,6 +82,15 @@ input[type="number"]::-webkit-inner-spin-button {
   font-size: 22px;
 }
 
+.loggedUser {
+  font-size: 10px;
+  font-weight: bold;
+  font-style: normal;
+  font-family: 'Poppins';
+  color: var(--blue-text);
+  text-align: center;
+}
+
 /* ========== General Pages Styling ========== */
 .checkout-top {
   width: 75%;

@@ -12,7 +12,6 @@ import StoreItemCard from "../../../components/shop/StoreItemCard/StoreItemCard"
 export default function ArtCraft() {
     const [expand, setExpand] = useState(false);
 
-
     const STORE = Data.artCraftPage.artCraftStore
 
     function handleExpand() {

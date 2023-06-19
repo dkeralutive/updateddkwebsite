@@ -3,7 +3,7 @@ import formatCurrency from "../../../utilities/FormatCurrency"
 interface CheckoutProps {
   itemImg: string;
   itemName: string;
-  itemCount: number;
+  itemCount: string;
   amount: number;
   subTotal: number;
   total: number;

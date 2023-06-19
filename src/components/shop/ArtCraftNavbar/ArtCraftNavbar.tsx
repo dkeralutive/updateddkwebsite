@@ -10,7 +10,7 @@ import { useStoreContext } from "../../../contexts/StoreContext";
 export default function ArtCraftNavbar({ activeLink }: { activeLink: string }) {
   const [active, setActive] = useState(activeLink);
 
-  const { cartCount } = useStoreContext();
+  const { cartQty } = useStoreContext();
 
   const navigate = useNavigate();
 
@@ -70,7 +70,7 @@ export default function ArtCraftNavbar({ activeLink }: { activeLink: string }) {
             alt="lock"
             onClick={() => navigate("/order")}
           />
-          <span className="cart-notification-count">{cartCount()}</span>
+          <span className="cart-notification-count">{cartQty}</span>
         </Navbar.Text>
         <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-sm`} />
       </Container>

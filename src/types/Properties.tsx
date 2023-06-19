@@ -35,3 +35,26 @@ export interface TotalNoOfPropertiesResponseProps {
   productDescriptionDto: PropertyResponseProps;
   values: NoOfPropertiesByCatProp;
 }
+
+export interface checkoutResponse {
+  code: string,
+  responseDto: {
+    code: string;
+    message: string;
+  };
+  deliverydto: {
+    firstName: string;
+    lastName: string;
+    address: string;
+    zipCode: string;
+    state: string;
+    city: string;
+    userName: string;
+    localGovernment: string;
+    feeDto: {
+      localGovArea: string;
+      doorDeliveryFee: string;
+      deliveryPeriod: string;
+    };
+  };
+}

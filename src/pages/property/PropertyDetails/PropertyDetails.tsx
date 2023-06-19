@@ -1,16 +1,25 @@
-// import { useState } from "react"
+import { useState } from "react";
+import { Alert } from "react-bootstrap";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Footer from "../../../components/general/Footer/Footer";
 import PropertyNavbar from "../../../components/property/PropertyNavbar/PropertyNavbar";
+import { useAdminContext } from "../../../contexts/AdminContext";
 import { usePropertyContext } from "../../../contexts/PropertyContext";
+import { useStoreContext } from "../../../contexts/StoreContext";
+import ErrorModal from "../../../modals/Error";
 import formatCurrency from "../../../utilities/FormatCurrency";
 import "./PropertyDetails.css";
-import { Alert } from "react-bootstrap";
+import { checkoutResponse } from "../../../types/Properties";
 
 export default function PropertyDetails() {
-  // const [activeTab, setActiveTab] = useState("description")
+  const [error, setError] = useState("");
+
+  // Contexts values
+  const { token } = useAdminContext();
+  const { setActiveTab } = useStoreContext();
+  const { propertyItem, unboardingFrom, setCheckOut } = usePropertyContext();
 
   // NAVIGATE TO PAGES
   const navigate = useNavigate();
@@ -18,14 +27,58 @@ export default function PropertyDetails() {
   function navigateToContact() {
     navigate("/contact-us");
   }
-  function navigateToPersonalDetails() {
-    navigate("/personal-details");
+
+  async function handlePay() {
+    const myHeaders = new Headers();
+    myHeaders.append("apiKey", token);
+    myHeaders.append("Content-Type", "application/json");
+
+    const raw = JSON.stringify({
+      address: "5 shobande street",
+      zipCode: "10001",
+      state: "lagos",
+      city: "lagos",
+      userName: "rose",
+      localGovernment: "Somolu",
+    });
+
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+    };
+
+    if (token !== "") {
+      const res = await fetch(
+        `${import.meta.env.VITE_BASEURL}/api/v1/delivery/checkout`,
+        requestOptions
+      );
+      if (!res) setError("Cannot connect to server");
+      const data: checkoutResponse = await res.json();
+
+      if (data.code == "cv401") {
+        navigate("/property-checkout");
+        setActiveTab("sign-in");
+      } else if (data.responseDto.code == "dkss") {
+        setCheckOut(data);
+        navigate("/property-checkout");
+        setActiveTab("billing-details");
+      } else {
+        setError(data.responseDto.message);
+      }
+    } else {
+      navigate("/property-checkout");
+      setActiveTab("sign-in");
+    }
   }
 
   // FROM CONTEXT API
-  const { propertyItem } = usePropertyContext();
-
-  if (propertyItem === null) return <Alert variant="danger"><p>Item not found</p></Alert>;
+  if (propertyItem === null)
+    return (
+      <Alert variant="danger">
+        <p>Item not found</p>
+      </Alert>
+    );
 
   // RESPONSIVE BREAKPOINTS FOR CAROUSEL
   const responsive = {
@@ -86,14 +139,21 @@ export default function PropertyDetails() {
                 infinite
                 containerClass="carousel-container"
               >
-                <img src={propertyItem.imageUrl} alt={propertyItem.description} />
+                <img
+                  src={propertyItem.imageUrl}
+                  alt={propertyItem.description}
+                />
               </Carousel>
             )}
           </div>
 
           <div className="property-details-desc">
             <div className="property-details-link">
-              Home - {"apartment"} -{" "}
+              Home -{" "}
+              <Link to={`/property-${unboardingFrom.toLowerCase()}`}>
+                {unboardingFrom.toLowerCase()}
+              </Link>{" "}
+              -{" "}
               <span>
                 {propertyItem.description} in {propertyItem.location}
               </span>
@@ -102,36 +162,13 @@ export default function PropertyDetails() {
             <h2>{propertyItem.description}</h2>
             <p className="about-property">{propertyItem.productSize}</p>
 
-            {/* <div className="property-details-desc-highlights">
-                <h4>Highlights:</h4>
-
-                <ul>
-                  {propertyItem.listDesc.map((list, idx) => (
-                    <li key={idx}>{list}</li>
-                  ))}
-                </ul>
-              </div> */}
-
             <div className="property-details-price">
-              {/* <span>
-                  Rooms
-                  <h6>{propertyItem.roomCount}</h6>
-                </span>
-                <div className="lineVertical" />
-                <span>
-                  Toilet
-                  <h6>{propertyItem.toiletCount}</h6>
-                </span> */}
-              {/* <div className="lineVertical" /> */}
               <h1>{formatCurrency(propertyItem.amount)}</h1>
             </div>
 
             <div className="pay-btn-group">
-              <button
-                className="property-pay"
-                onClick={navigateToPersonalDetails}
-              >
-                Pay
+              <button className="property-pay" onClick={handlePay}>
+                Continue
               </button>
               <button className="property-contact" onClick={navigateToContact}>
                 Contact Us
@@ -213,6 +250,8 @@ export default function PropertyDetails() {
       </section>
 
       <Footer />
+
+      {error && <ErrorModal errorMsg={error} callbackFunction={setError} />}
     </div>
   );
 }

@@ -1,7 +1,6 @@
 import { useAdminContext } from "../contexts/AdminContext";
 import "./Modals.css";
 
-
 type AdminLoginErrorProp = {
   loginError: string;
 };
@@ -11,9 +10,7 @@ export default function AdminLoginError({ loginError }: AdminLoginErrorProp) {
 
   function handleClick() {
     setLoginStates((prev) => {
-      if (prev) {
-        return { ...prev, isLoginFailed: false };
-      }
+      return { ...prev, isLoginFailed: false };
     });
   }
 
@@ -27,15 +24,11 @@ export default function AdminLoginError({ loginError }: AdminLoginErrorProp) {
       !target.classList.contains("modal-card-subtitle")
     ) {
       return setLoginStates((prev) => {
-        if (prev) {
-          return { ...prev, isLoginFailed: false };
-        }
+        return { ...prev, isLoginFailed: false };
       });
     } else {
       return setLoginStates((prev) => {
-        if (prev) {
-          return { ...prev, isLoginFailed: true };
-        }
+        return { ...prev, isLoginFailed: true };
       });
     }
   }

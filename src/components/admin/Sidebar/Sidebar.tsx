@@ -47,9 +47,7 @@ export default function Sidebar({ active }: sideBarProps) {
   //   Handlet to sign out
   function signOut() {
     setLoginStates(prev => {
-        if (prev) {
-            return {isLoginFailed: false, isLoginSuccessful: false, user: ""}
-        }
+            return {...prev, isLoginFailed: false, isLoginSuccessful: false, user: ""}
     })
     setToken("")
     navigate;("/admin-login")

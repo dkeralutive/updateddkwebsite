@@ -76,6 +76,7 @@ export interface StoreItemProps {
   productDescription: string;
   keyIngredient: string;
   howToApply: string;
+  qty?: number
 }
 
 export interface CartItemProps {
@@ -110,31 +111,3 @@ export interface PropertyStoreProps {
     listDesc: string[];
 }
 
-export interface AdminContextProps {
-  loginStates: loginStatesProp;
-  setLoginStates: React.Dispatch<
-    React.SetStateAction<loginStatesProp | undefined>
-  >;
-
-  token: string;
-  setToken: React.Dispatch<React.SetStateAction<string>>;
-
-  productCategories: productCategoryProps[];
-  setProductCategories: React.Dispatch<
-    React.SetStateAction<productCategoryProps[]>
-  >;
-
-  productImgs: string[];
-  setProductImgs: React.Dispatch<React.SetStateAction<string[]>>;
-
-  productDescription: productDescriptionProps[];
-  setProductDescription: React.Dispatch<
-    React.SetStateAction<productDescriptionProps[]>
-  >;
-
-  customers: adminCustomerProps[];
-  setCustomers: React.Dispatch<React.SetStateAction<adminCustomerProps[]>>;
-
-  stockList: stockProps[];
-  setStockList: React.Dispatch<React.SetStateAction<stockProps[]>>;
-}

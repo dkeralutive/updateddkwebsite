@@ -1,7 +1,7 @@
 .e-store-home {
     width: 100vw;
     min-height: 100vh;
-    background: url("/public/images/home-bg-img.jpg");
+    background: url("/images/home-bg-img.jpg");
     background-position: center;
     background-size: cover;
 }

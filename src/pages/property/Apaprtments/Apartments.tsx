@@ -25,7 +25,8 @@ export default function Apartments() {
   const [error, setError] = useState("");
 
   const { token } = useAdminContext();
-  const { state, currentPage, propertyPrice } = usePropertyContext();
+  const { state, currentPage, propertyPrice, setUnboardingFrom } =
+    usePropertyContext();
 
   async function getLandProperties() {
     const myHeaders = new Headers();
@@ -64,6 +65,11 @@ export default function Apartments() {
   useEffect(() => {
     getLandProperties();
   }, [state, propertyPrice]);
+
+  useEffect(() => {
+    setUnboardingFrom("Apartments");
+  }, []);
+
   return (
     <div>
       <ApartmentsMain activeNavLink="apartments" />

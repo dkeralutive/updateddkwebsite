@@ -1,9 +1,19 @@
 import { Suspense, lazy } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-// import FashionMen from "./pages/store/Fashion(Men)/FashionMen";
 import { useAdminContext } from "./contexts/AdminContext";
 import Spinner from "./utilities/Spinner";
 
+const PaymentSuccessful = lazy(() => import("./modals/PaymentSuccessful"));
+const Orders = lazy(() => import("./pages/store/Orders/Orders"));
+const CaseStudyPage = lazy(() => import("./pages/store/CaseStudy/CaseStudy"));
+const DetailsPage = lazy(() => import("./pages/store/DetailsPage/DetailsPage"));
+const Customise = lazy(() => import("./pages/store/Customise/Customise"));
+const Kids = lazy(() => import("./pages/store/Kids/Kids"));
+const AllBrands = lazy(() => import("./pages/store/AllBrands/AllBrands"));
+const FashionWomen = lazy(() => import("./pages/store/Fashion(Women)/Fashion(Women)"));
+const FashionMen = lazy(() => import("./pages/store/Fashion(Men)/FashionMen"));
+const CreateAccount = lazy(() => import("./pages/general/CreateAccount/CreateAccount"));
+const PropertyCheckout = lazy(() => import("./pages/property/PropertyCheckout/PropertyCheckout"));
 const PropertyDetails = lazy(() => import("./pages/property/PropertyDetails/PropertyDetails"));
 const Shortlets = lazy(() => import("./pages/property/Shortlets/Shortlets"));
 const Apartments = lazy(() => import("./pages/property/Apaprtments/Apartments"));
@@ -55,6 +65,15 @@ export default function App() {
       />
 
       <Route
+        path="/property-checkout"
+        element={
+          <Suspense fallback={Spinner({ animationType: "border" })}>
+            <PropertyCheckout />
+          </Suspense>
+        }
+      />
+
+      <Route
         path="/signup"
         element={
           <Suspense fallback={Spinner({ animationType: "border" })}>
@@ -81,7 +100,61 @@ export default function App() {
         }
       />
 
+      <Route
+        path="/create-account"
+        element={
+          <Suspense fallback={Spinner({ animationType: "border" })}>
+            <CreateAccount />
+          </Suspense>
+        }
+      />
+
+      <Route
+        path="/payment-successful"
+        element={
+          <Suspense fallback={Spinner({ animationType: "border" })}>
+            <PaymentSuccessful />
+          </Suspense>
+        }
+      />
+
       {/* ================ STORE ROUTES ================ */}
+      <Route
+        path="/fashion"
+        element={
+          <Suspense fallback={Spinner({ animationType: "border" })}>
+            <FashionMen />
+          </Suspense>
+        }
+      />
+
+      <Route
+        path="/women"
+        element={
+          <Suspense fallback={Spinner({ animationType: "border" })}>
+            <FashionWomen />
+          </Suspense>
+        }
+      />
+
+      <Route
+        path="/kids"
+        element={
+          <Suspense fallback={Spinner({ animationType: "border" })}>
+            <Kids />
+          </Suspense>
+        }
+      />
+
+      <Route
+        path="/all-brands"
+        element={
+          <Suspense fallback={Spinner({ animationType: "border" })}>
+            <AllBrands />
+          </Suspense>
+        }
+      />
+
       <Route
         path="/art-craft"
         element={
@@ -92,10 +165,46 @@ export default function App() {
       />
 
       <Route
+        path="/details-page"
+        element={
+          <Suspense fallback={Spinner({ animationType: "border" })}>
+            <DetailsPage />
+          </Suspense>
+        }
+      />
+
+      <Route
+        path="/customise"
+        element={
+          <Suspense fallback={Spinner({ animationType: "border" })}>
+            <Customise />
+          </Suspense>
+        }
+      />
+
+      <Route
         path="/software"
         element={
           <Suspense fallback={Spinner({ animationType: "border" })}>
             <Software />
+          </Suspense>
+        }
+      />
+
+      <Route
+        path="/caseStudy-page"
+        element={
+          <Suspense fallback={Spinner({ animationType: "border" })}>
+            <CaseStudyPage />
+          </Suspense>
+        }
+      />
+
+      <Route
+        path="/order"
+        element={
+          <Suspense fallback={Spinner({ animationType: "border" })}>
+            <Orders />
           </Suspense>
         }
       />

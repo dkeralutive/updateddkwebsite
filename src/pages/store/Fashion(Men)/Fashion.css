@@ -1,6 +1,6 @@
 /* MAIN */
 .main {
-    background-image: url("/public/images/fashion-bg-img.png");
+    background-image: url("/images/fashion-bg-img.png");
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -173,7 +173,7 @@
     #fashion-main-search-form {
         width: 100%;
     }
-    
+
     .main h1 {
         font-weight: 500;
         font-size: 26px;
