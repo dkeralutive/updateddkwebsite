@@ -17,7 +17,7 @@ const Checkout = () => {
   const [error, setError] = useState("");
   const [showFrame, setShowFrame] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [state, setState] = useState("")
+  const [state, setState] = useState("");
 
   const {
     activeTab,
@@ -135,7 +135,8 @@ const Checkout = () => {
         authorization_url: res.authorization_url,
       }));
       setLoading(false);
-      setShowFrame(true);
+      window.open(initialiseCardStates.authorization_url);
+      // setShowFrame(true);
     } else {
       setLoading(false);
       setError(data.responseDto.message);
@@ -150,11 +151,11 @@ const Checkout = () => {
 
   // Get Nigerian Zipcodes according to states
   const getZipCode = async () => {
-      const index = await NigeriaStates.indexOf(state.toLowerCase())
-      if (index !== -1 && ZipCodeRef.current) {
-        ZipCodeRef.current.value = NigeriaZipCodes[index];
-      }
+    const index = await NigeriaStates.indexOf(state.toLowerCase());
+    if (index !== -1 && ZipCodeRef.current) {
+      ZipCodeRef.current.value = NigeriaZipCodes[index];
     }
+  };
 
   return (
     <div>
@@ -228,7 +229,7 @@ const Checkout = () => {
                 value={state}
                 type="text"
                 onChange={(e) => {
-                  setState(e.target.value)
+                  setState(e.target.value);
                   getZipCode();
                 }}
                 placeholder="State"
@@ -300,7 +301,7 @@ const Checkout = () => {
 
       {error && <ErrorModal errorMsg={error} callbackFunction={setError} />}
       {loading && <Spinner animationType="grow" />}
-      {showFrame && (
+      {/* {showFrame && (
         <div className="i_frame_modal">
           <iframe
             src={initialiseCardStates.authorization_url}
@@ -308,9 +309,9 @@ const Checkout = () => {
             loading="lazy"
           ></iframe>
         </div>
-      )}
+      )} */}
     </div>
   );
-}
+};
 
 export default Checkout;
