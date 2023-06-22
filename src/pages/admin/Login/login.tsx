@@ -4,8 +4,15 @@ import { useNavigate } from "react-router-dom";
 import "./login.css";
 import { useAdminContext } from "../../../contexts/AdminContext";
 import AdminLoginError from "../../../modals/AdminLoginError";
+import { loginStatesProp } from "../../../types/contexts";
 
-export default function Login() {
+interface handleSubmitProps {
+  loginStates: loginStatesProp;
+  setLoginStates: React.Dispatch<React.SetStateAction<loginStatesProp>>;
+}
+
+
+export default function Login({ setLoginStates, loginStates }: handleSubmitProps) {
   // ** State to store input type for password
   const [inputType, setInputType] = useState("password");
   const [error, setError] = useState("");
@@ -17,7 +24,7 @@ export default function Login() {
   const navigate = useNavigate();
 
   // ** Welcome context values
-  const { loginStates, setLoginStates, setToken } = useAdminContext();
+  const { setToken } = useAdminContext();
 
   // ** Create refs
   const formRefer = useRef<null | HTMLFormElement>(null);
@@ -39,53 +46,53 @@ export default function Login() {
     // setIsLoading(true)
     const url = `${import.meta.env.VITE_BASEURL}/api/v1/login/staff`;
 
-      const myHeaders = new Headers();
-      myHeaders.append("Content-Type", "application/json");
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
 
-      const raw = JSON.stringify({
-        userName: emailRefer.current?.value,
-        password: passwordRefer.current?.value,
-      });
+    const raw = JSON.stringify({
+      userName: emailRefer.current?.value,
+      password: passwordRefer.current?.value,
+    });
 
-      const requestOptions = {
-        method: "POST",
-        headers: myHeaders,
-        body: raw,
-      };
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+    };
 
-      const response = await fetch(url, requestOptions);
-      const data = await response.json();
+    const response = await fetch(url, requestOptions);
+    const data = await response.json();
 
-      try {
-        if (data.responseDto.code === "dkss") {
-          console.log(data.token);
-          setLoginStates((prev) => {
-            return {
-              ...prev,
-              isLoginFailed: false,
-              isLoginSuccessful: true,
-              user: data.emailAddress,
-            };
-          });
-          setIsLoading(false);
-          setToken(data.token);
-          navigate("/admin-dashboard");
-        } else {
-          setIsLoading(false);
-          setError(data.responseDto.message);
-          setLoginStates((prev) => {
-            return {
-              ...prev,
-              isLoginFailed: true,
-              isLoginSuccessful: false,
-              user: "",
-            };
-          });
-        }
-      } catch (error) {
+    try {
+      if (data.responseDto.code === "dkss") {
+        console.log(data.token);
+        setLoginStates((prev) => {
+          return {
+            ...prev,
+            isLoginFailed: false,
+            isLoginSuccessful: true,
+            user: data.emailAddress,
+          };
+        });
         setIsLoading(false);
-        setError("Cannot connect to server");
+        setToken(data.token);
+        navigate("/admin-dashboard");
+      } else {
+        setIsLoading(false);
+        setError(data.responseDto.message);
+        setLoginStates((prev) => {
+          return {
+            ...prev,
+            isLoginFailed: true,
+            isLoginSuccessful: false,
+            user: "",
+          };
+        });
       }
+    } catch (error) {
+      setIsLoading(false);
+      setError("Cannot connect to server");
+    }
   }
 
   return (
@@ -133,9 +140,7 @@ export default function Login() {
         </div>
       </div>
 
-      {loginStates.isLoginFailed && (
-        <AdminLoginError loginError={error} />
-      )}
+      {loginStates.isLoginFailed && <AdminLoginError loginError={error} />}
       {isLoading && Spinner({ animationType: "grow" })}
     </>
   );

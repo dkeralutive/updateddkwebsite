@@ -1,8 +1,10 @@
 import { Suspense, lazy } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import { AdminContextProvider, useAdminContext } from "./contexts/AdminContext";
+import { AdminContextProvider } from "./contexts/AdminContext";
 import { PropertyContextProvider } from "./contexts/PropertyContext";
 import { StoreContextProvider } from "./contexts/StoreContext";
+import useLocalStorage from "./hooks/useLocalStorage";
+import { loginStatesProp } from "./types/contexts";
 import Spinner from "./utilities/Spinner";
 
 const WallPainting = lazy(
@@ -56,10 +58,17 @@ const Login = lazy(() => import("./pages/admin/Login/login"));
 const Home = lazy(() => import("./pages/general/Home/Home"));
 
 export default function App() {
-  // const { loginStates } = useAdminContext();
+  // ** States for staff login
+  const [loginStates, setLoginStates] = useLocalStorage<loginStatesProp>(
+    "loginStates",
+    {
+      isLoginSuccessful: false,
+      isLoginFailed: false,
+      user: "",
+    }
+  );
+  const user = loginStates.user;
 
-  // const user = loginStates.user;
-  const user = true;
   return (
     <BrowserRouter>
       <AdminContextProvider>
@@ -299,7 +308,10 @@ export default function App() {
                 path="/admin-login"
                 element={
                   <Suspense fallback={Spinner({ animationType: "border" })}>
-                    <Login />
+                    <Login
+                      loginStates={loginStates}
+                      setLoginStates={setLoginStates}
+                    />
                   </Suspense>
                 }
               />

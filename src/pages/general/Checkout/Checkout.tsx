@@ -1,5 +1,5 @@
 import { FormEvent, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import CheckOutCard from "../../../components/general/CheckoutCard/CheckOutCard";
 import Footer from "../../../components/general/Footer/Footer";
 import ArtCraftNavbar from "../../../components/shop/ArtCraftNavbar/ArtCraftNavbar";
@@ -18,6 +18,8 @@ const Checkout = () => {
   const [showFrame, setShowFrame] = useState(false);
   const [loading, setLoading] = useState(false);
   const [state, setState] = useState("");
+
+  console.log(useParams());
 
   const {
     activeTab,
@@ -128,6 +130,7 @@ const Checkout = () => {
 
     if (data.responseDto.code === "dkss") {
       const res = data.initializeTransactionResponse.data;
+      
       setInitialiseCardStates((prev) => ({
         ...prev,
         reference: res.reference,
@@ -135,8 +138,9 @@ const Checkout = () => {
         authorization_url: res.authorization_url,
       }));
       setLoading(false);
-      window.open(initialiseCardStates.authorization_url);
-      // setShowFrame(true);
+      // window.open(initialiseCardStates.authorization_url, "_self");
+      setShowFrame(true);
+      console.log(res.authorization_url);
     } else {
       setLoading(false);
       setError(data.responseDto.message);
@@ -301,7 +305,7 @@ const Checkout = () => {
 
       {error && <ErrorModal errorMsg={error} callbackFunction={setError} />}
       {loading && <Spinner animationType="grow" />}
-      {/* {showFrame && (
+      {showFrame && (
         <div className="i_frame_modal">
           <iframe
             src={initialiseCardStates.authorization_url}
@@ -309,7 +313,7 @@ const Checkout = () => {
             loading="lazy"
           ></iframe>
         </div>
-      )} */}
+      )}
     </div>
   );
 };

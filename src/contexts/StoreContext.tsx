@@ -40,10 +40,12 @@ export interface StoreContextProps {
   setUserName: any;
 
   selectedItem: StoreItemProps;
+  setSelectedItem: React.Dispatch<React.SetStateAction<StoreItemProps>>;
 
   cartQty: number;
 
   cartItems: CartItemProps[];
+  setCartItems: React.Dispatch<React.SetStateAction<CartItemProps[]>>;
 
   getItemQty: (id: number) => number;
 
@@ -194,8 +196,9 @@ export function StoreContextProvider({ children }: contextProvider) {
     activeSignInTab,
     setActiveSignInTab,
     selectedItem,
-    // addToCart,
+    setSelectedItem,
     cartItems,
+    setCartItems,
     getItemQty,
     increaseCartQty,
     decreaseCartQty,
