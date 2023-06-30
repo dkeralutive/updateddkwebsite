@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
-// import axios from "axios"
 import { useEffect, useRef, useState } from "react";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import { BsArrowLeft, BsArrowRight, BsCamera, BsUpload } from "react-icons/bs";
@@ -85,7 +84,6 @@ export default function ProductDescription() {
 
   // ** FIle input states
   const [fileInput, setFileInput] = useState<File[] | undefined>([]);
-  const [filebase64, setFileBase64] = useState<string[]>([]);
 
   // State to capture error
   const [error, setError] = useState("");
@@ -155,28 +153,6 @@ export default function ProductDescription() {
     setProductImgs(selectedFiles);
   }
 
-  function convertFile(files: FileList | null) {
-    if (files) {
-      const fileRef = [...files] || [];
-      const fileType: string[] = fileRef.map((ref) => ref.type);
-
-      console.log("This file upload is of type:", fileType);
-      const reader = new FileReader();
-
-      fileRef.forEach((file) => {
-        reader.readAsBinaryString(file);
-      });
-      reader.onload = (ev: any) => {
-        const fileNames = fileType.map(
-          (file) => `data:${file};base64,${btoa(ev.target.result)}`
-        );
-        console.log(fileNames);
-
-        // convert it to base64
-        setFileBase64(fileNames);
-      };
-    }
-  }
 
   // ** Get all product description response from server
   async function getAllProductDescriptions() {
@@ -270,6 +246,7 @@ export default function ProductDescription() {
     )
       .then((response) => response.json())
       .then((result) => {
+        console.log(result)
         form.reset();
         setProductImgs([]);
       })
@@ -376,13 +353,13 @@ export default function ProductDescription() {
 
         <Offcanvas.Body className="addProduct-body">
           <div id="imgList" className="imgList">
-            {filebase64.length < 4 && filebase64.length > 0 ? (
-              filebase64.map((img, idx) => (
+            {productImgs.length < 4 && productImgs.length > 0 ? (
+              productImgs.map((img, idx) => (
                 <img
                   className="addImage-img"
                   key={idx}
                   src={img}
-                  alt={`img-${filebase64[idx]}`}
+                  alt={`img-${productImgs[idx]}`}
                 />
               ))
             ) : (
@@ -417,7 +394,7 @@ export default function ProductDescription() {
               <input
                 type="file"
                 id="selectFile"
-                onChange={(e) => convertFile(e.target.files)}
+                onChange={handleFileChange}
                 accept="image/*"
                 multiple
                 hidden
