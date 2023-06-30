@@ -394,7 +394,7 @@ export default function ProductDescription() {
               <input
                 type="file"
                 id="selectFile"
-                onChange={ () => handleFileChange()}
+                onChange={ (e :any) => handleFileChange(e)}
                 accept="image/*"
                 multiple
                 hidden
