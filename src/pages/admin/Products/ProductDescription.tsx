@@ -102,7 +102,7 @@ export default function ProductDescription() {
 
   // ** Welcome context contextValues
   const {
-    // productImgs,
+    productImgs,
     setProductImgs,
     productDescription,
     setProductDescription,
