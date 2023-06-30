@@ -70,7 +70,7 @@ export default function PaymentSuccessful() {
       // Empty the cart
       setSelectedItem({} as StoreItemProps);
       setCartItems([]);
-      // Route to fashion
+      // Route to home
       navigate("/");
     } else {
       setError(data.responseDto.message);

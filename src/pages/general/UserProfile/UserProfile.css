@@ -1,0 +1,50 @@
+.userCard-container {
+    width: min(800px, 100%);
+    margin: 0 auto;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #D5D5D5;
+    padding-bottom: 0.4rem;
+    cursor: pointer;
+}
+
+
+.userCard-container div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.userCard-container div h2 {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    color: #000000;
+}
+
+.userCard-container div p {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    color: #888888;
+}
+
+.userProfile-signout {
+    --width: 90px;
+    width: var(--width);
+    border: 0;
+    outline: 0;
+    background-color: var(--pink);
+    margin-left: calc((100% - var(--width)) / 2);
+    margin-top: 5rem;
+    text-align: center;
+    font-family: "Poppins";
+    font-style: normal;
+    font-family: 15px;
+    color: white;
+    padding: 8px 0;
+}

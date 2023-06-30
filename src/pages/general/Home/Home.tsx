@@ -1,40 +1,47 @@
-import { useState } from 'react';
-import { Card, Container, Nav, Navbar, Offcanvas } from 'react-bootstrap';
-import Carousel from 'react-multi-carousel';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { Carousel } from "@trendyol-js/react-carousel";
+import { useState } from "react";
+import { Card, Container, Nav, Navbar, Offcanvas } from "react-bootstrap";
+import { NavLink, useNavigate } from "react-router-dom";
 import Data from "../../../Data.json";
 import Footer from "../../../components/general/Footer/Footer";
+import DeliveryBox from "../../../components/shop/DeliveryBox/DeliveryBox";
+import SoftwareAd from "../../../components/shop/SoftwareAd/SoftwareAds";
+import mobileView from "../../../utilities/mobileView";
+import tabletView from "../../../utilities/tabletView";
 import "./home.css";
-import DeliveryBox from '../../../components/shop/DeliveryBox/DeliveryBox';
-import SoftwareAd from '../../../components/shop/SoftwareAd/SoftwareAds';
-import mobileView from '../../../utilities/mobileView';
 
 export default function Home() {
   const [activeNav, setActiveNav] = useState("home");
 
   // Navigate function
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   // Responsive layout for multi-carousel-slider
-  const responsive = {
-    superLargeDesktop: {
-      // the naming can be any, depends on you.
-      breakpoint: { max: 4000, min: 1200 },
-      items: 5,
-    },
-    desktop: {
-      breakpoint: { max: 1200, min: 992 },
-      items: 4,
-    },
-    tablet: {
-      breakpoint: { max: 992, min: 576 },
-      items: 2,
-    },
-    mobile: {
-      breakpoint: { max: 576, min: 0 },
-      items: 1,
-    },
-  };
+  // const responsive = {
+  //   superLargeDesktop: {
+  //     // the naming can be any, depends on you.
+  //     breakpoint: { max: 4000, min: 1200 },
+  //     items: 5,
+  //   },
+  //   desktop: {
+  //     breakpoint: { max: 1200, min: 992 },
+  //     items: 4,
+  //   },
+  //   tablet: {
+  //     breakpoint: { max: 992, min: 576 },
+  //     items: 2,
+  //   },
+  //   mobile: {
+  //     breakpoint: { max: 576, min: 0 },
+  //     items: 1,
+  //   },
+  // };
+
+  function carouselShow() {
+    if (mobileView()) return 1;
+    if (tabletView()) return 2;
+    return 5;
+  }
 
   return (
     <div>
@@ -64,10 +71,16 @@ export default function Home() {
                       as={NavLink}
                       key={idx}
                       to={link}
-                      className={activeNav === title.toLowerCase() ? "homeNavLink activeNav" : "homeNavLink"}
+                      className={
+                        activeNav === title.toLowerCase()
+                          ? "homeNavLink activeNav"
+                          : "homeNavLink"
+                      }
                       onClick={() => setActiveNav(title.toLowerCase())}
                       style={{ color: mobileView() ? "#000" : "#e2e2e2" }}
-                    >{title}</Nav.Link>
+                    >
+                      {title}
+                    </Nav.Link>
                   ))}
                 </Nav>
               </Offcanvas.Body>
@@ -91,7 +104,11 @@ export default function Home() {
 
           <div className="main-overlay-footer">
             <div className="main-footer-imgs">
-              <img className="play-icon" src="/images/play-icon.png" alt="play-icon" />
+              <img
+                className="play-icon"
+                src="/images/play-icon.png"
+                alt="play-icon"
+              />
               <img
                 className="play-vector"
                 src="/images/play-vector.png"
@@ -138,12 +155,7 @@ export default function Home() {
 
         {/* ViIDEO SECTION */}
         <div className="video-container" style={{ marginTop: "5rem" }}>
-          <video
-            src="/images/ShopAdvertisingVideo.mp4"
-            autoPlay
-            loop
-            muted
-          />
+          <video src="/images/ShopAdvertisingVideo.mp4" autoPlay loop muted />
         </div>
 
         {/* TESTIMONIAL */}
@@ -182,7 +194,10 @@ export default function Home() {
           />
 
           <div className="box-4">
-            <button className="box-4-group" onClick={() => navigate("/fashion")}>
+            <button
+              className="box-4-group"
+              onClick={() => navigate("/fashion")}
+            >
               Our Store
               <img src="/images/arrow-up.png" alt="arrow-up" />
             </button>
@@ -212,13 +227,15 @@ export default function Home() {
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elementum
             tortor cum dictum nulla.
           </p>
-          <button className="art-btn" onClick={() => navigate("/art-craft")}>See Our Art Shop</button>
+          <button className="art-btn" onClick={() => navigate("/art-craft")}>
+            See Our Art Shop
+          </button>
         </div>
       </section>
 
       {/* SLIDER */}
       <section>
-        <Carousel
+        {/* <Carousel
           responsive={responsive}
           infinite
           swipeable
@@ -234,7 +251,31 @@ export default function Home() {
                 src={data.img}
                 className="homeAdCarousel-img"
               />
-              <Card.Header className="overflow-hidden">{data.title}</Card.Header>
+              <Card.Header className="overflow-hidden">
+                {data.title}
+              </Card.Header>
+            </Card>
+          ))}
+        </Carousel> */}
+
+        <Carousel
+          show={carouselShow()}
+          slide={1}
+          transition={0.5}
+          responsive={true}
+          useArrowKeys={true}
+          infinite={true}
+        >
+          {Data.homePage.homeAdCarousel.map((data, idx) => (
+            <Card key={idx} className="homeAdCarousel">
+              <Card.Img
+                variant="top"
+                src={data.img}
+                className="homeAdCarousel-img"
+              />
+              <Card.Header className="overflow-hidden">
+                {data.title}
+              </Card.Header>
             </Card>
           ))}
         </Carousel>
@@ -246,5 +287,5 @@ export default function Home() {
       {/* FOOTER */}
       <Footer />
     </div>
-  )
+  );
 }

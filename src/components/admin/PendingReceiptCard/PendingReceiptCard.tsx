@@ -1,17 +1,32 @@
+import { useState } from "react";
+import { useAdminContext } from "../../../contexts/AdminContext";
+import { ReceiptTransaction } from "../../../types/admin";
 import formatCurrency from "../../../utilities/FormatCurrency";
 import AcceptedPaymentsCard from "../AcceptedPaymentsCard/AcceptedPaymentsCard";
 import "./PendingReceiptCard.css";
 
-export default function PendingReceiptCard() {
+export default function PendingReceiptCard({
+  receipt,
+}: {
+  receipt: ReceiptTransaction;
+}) {
+  const [prodImage, setProdImage] = useState("");
+  const [prodTitle, setProdTitle] = useState("");
+  const { imageUrl, descriptionCode, reference } = receipt;
+
+  // Context
+  const { productDescription } = useAdminContext();
+  const prod = productDescription.find((desc) => desc.code == descriptionCode);
+  if (prod) { 
+    setProdImage(prod.imageUrl)
+    setProdTitle(prod.description)
+  }
+
   return (
-    <article className="pending_receipt_wrapper">
+    <article className="pending_receipt_wrapper mt-4">
       <div className="pending_receipt_property_details">
         <div className="receipt_up">
-          <img
-            className="pending_receit_img"
-            src="/images/Property/apartment1.png"
-            alt="apartment1"
-          />
+          <img className="pending_receit_img" src={prodImage} alt={prodTitle} />
 
           <div className="property_details">
             <div>
@@ -25,7 +40,7 @@ export default function PendingReceiptCard() {
                 className="receipt_property_name"
                 style={{ fontSize: "13px" }}
               >
-                3 Bedroom Apartment
+                {prodTitle}
               </h3>
             </div>
           </div>
@@ -60,7 +75,7 @@ export default function PendingReceiptCard() {
               width={40}
               height={42}
               style={{ objectFit: "cover", borderRadius: "7px" }}
-              src="/images/Property/apartment1.png"
+              src={imageUrl}
               alt="apartment1"
             />
 
@@ -76,7 +91,7 @@ export default function PendingReceiptCard() {
                   className="receipt_property_name"
                   style={{ fontSize: "11px" }}
                 >
-                  863798YDJHCDUT
+                  {reference}
                 </h3>
               </div>
             </div>

@@ -7,8 +7,15 @@ import useLocalStorage from "./hooks/useLocalStorage";
 import { loginStatesProp } from "./types/contexts";
 import Spinner from "./utilities/Spinner";
 
+
 const WallPainting = lazy(
   () => import("./pages/store/WallPainting/WallPainting")
+);
+const UploadPayment = lazy(
+  () => import("./pages/general/UploadPayment/UploadPayment")
+);
+const UserProfile = lazy(
+  () => import("./pages/general/UserProfile/UserProfile")
 );
 const HandCrafted = lazy(() => import("./pages/store/HandCrafted/HandCrafted"));
 const PaymentSuccessful = lazy(() => import("./modals/PaymentSuccessful"));
@@ -144,6 +151,24 @@ export default function App() {
                 element={
                   <Suspense fallback={Spinner({ animationType: "border" })}>
                     <PaymentSuccessful />
+                  </Suspense>
+                }
+              />
+
+              <Route
+                path={`/user-profile/:id`}
+                element={
+                  <Suspense fallback={Spinner({ animationType: "border" })}>
+                    <UserProfile />
+                  </Suspense>
+                }
+              />
+
+              <Route
+                path={`/user-profile/:id/upload`}
+                element={
+                  <Suspense fallback={Spinner({ animationType: "border" })}>
+                    <UploadPayment />
                   </Suspense>
                 }
               />

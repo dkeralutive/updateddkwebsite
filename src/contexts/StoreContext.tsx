@@ -30,14 +30,14 @@ export interface StoreContextProps {
   activeSignInTab: string;
   setActiveSignInTab: React.Dispatch<React.SetStateAction<string>>;
 
-  unboardStore: any;
-  setUnboardStore: any;
+  unboardStore: string;
+  setUnboardStore: React.Dispatch<React.SetStateAction<string>>;
 
-  userToken: any;
-  setUserToken: any;
+  userToken: string;
+  setUserToken: React.Dispatch<React.SetStateAction<string>>;
 
-  userName: any;
-  setUserName: any;
+  userName: string;
+  setUserName: React.Dispatch<React.SetStateAction<string>>;
 
   selectedItem: StoreItemProps;
   setSelectedItem: React.Dispatch<React.SetStateAction<StoreItemProps>>;

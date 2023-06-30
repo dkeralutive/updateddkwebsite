@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 // import axios from "axios"
 import { useEffect, useRef, useState } from "react";
@@ -6,12 +7,12 @@ import { BsArrowLeft, BsArrowRight, BsCamera, BsUpload } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import Sidebar from "../../../components/admin/Sidebar/Sidebar";
 import AdminTitleBar from "../../../components/admin/Titlebar/TitleBar";
-import ErrorModal from "../../../modals/Error";
-import formatCurrency from "../../../utilities/FormatCurrency";
-import "./Product.css";
 import { useAdminContext } from "../../../contexts/AdminContext";
+import ErrorModal from "../../../modals/Error";
 import { productDescriptionProps } from "../../../types/contexts";
+import formatCurrency from "../../../utilities/FormatCurrency";
 import isString from "../../../utilities/isString";
+import "./Product.css";
 
 interface SortCategoryProps {
   desc: productDescriptionProps;
@@ -84,6 +85,7 @@ export default function ProductDescription() {
 
   // ** FIle input states
   const [fileInput, setFileInput] = useState<File[] | undefined>([]);
+  const [filebase64, setFileBase64] = useState<string[]>([]);
 
   // State to capture error
   const [error, setError] = useState("");
@@ -153,6 +155,29 @@ export default function ProductDescription() {
     setProductImgs(selectedFiles);
   }
 
+  function convertFile(files: FileList | null) {
+    if (files) {
+      const fileRef = [...files] || [];
+      const fileType: string[] = fileRef.map((ref) => ref.type);
+
+      console.log("This file upload is of type:", fileType);
+      const reader = new FileReader();
+
+      fileRef.forEach((file) => {
+        reader.readAsBinaryString(file);
+      });
+      reader.onload = (ev: any) => {
+        const fileNames = fileType.map(
+          (file) => `data:${file};base64,${btoa(ev.target.result)}`
+        );
+        console.log(fileNames);
+
+        // convert it to base64
+        setFileBase64(fileNames);
+      };
+    }
+  }
+
   // ** Get all product description response from server
   async function getAllProductDescriptions() {
     const myHeaders = new Headers();
@@ -198,13 +223,6 @@ export default function ProductDescription() {
       );
     }
 
-    // Logic to manouvre type error
-    // (Argument of type 'string | undefined' is not assignable to parameter of type 'string | Blob')
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    
-
-
     formdata.append(
       "amount",
       isString(amountRefer.current?.value.toUpperCase())
@@ -213,17 +231,32 @@ export default function ProductDescription() {
       "description",
       isString(descriptionRefer.current?.value.toUpperCase())
     );
-    formdata.append("currency", isString(currencyRefer.current?.value.toUpperCase()));
-    formdata.append("productCode", isString(prodCodeRefer.current?.value.toUpperCase()));
+    formdata.append(
+      "currency",
+      isString(currencyRefer.current?.value.toUpperCase())
+    );
+    formdata.append(
+      "productCode",
+      isString(prodCodeRefer.current?.value.toUpperCase())
+    );
     formdata.append("code", isString(codeRefer.current?.value.toUpperCase()));
     formdata.append(
       "productCategoryCode",
       ProdCatCode.toString().toUpperCase()
     );
-    formdata.append("productSize", isString(sizeRefer.current?.value.toUpperCase()));
+    formdata.append(
+      "productSize",
+      isString(sizeRefer.current?.value.toUpperCase())
+    );
     formdata.append("price", isString(priceRefer.current?.value.toUpperCase()));
-    formdata.append("recent", isString(recentRefer.current?.value.toUpperCase()));
-    formdata.append("location", isString(locationRefer.current?.value.toUpperCase()));
+    formdata.append(
+      "recent",
+      isString(recentRefer.current?.value.toUpperCase())
+    );
+    formdata.append(
+      "location",
+      isString(locationRefer.current?.value.toUpperCase())
+    );
 
     const requestOptions = {
       method: "POST",
@@ -237,14 +270,10 @@ export default function ProductDescription() {
     )
       .then((response) => response.json())
       .then((result) => {
-        if (result.responseDto.code === "dkss") {
-          form.reset();
-          setProductImgs([]);
-        } else {
-          setError(result.responseDto.message);
-        }
+        form.reset();
+        setProductImgs([]);
       })
-      .catch(() => setError("Cannot connect to server"));
+      .catch((err) => setError(err.message));
   }
 
   // ** Delete a product description
@@ -347,13 +376,13 @@ export default function ProductDescription() {
 
         <Offcanvas.Body className="addProduct-body">
           <div id="imgList" className="imgList">
-            {productImgs.length < 4 && productImgs.length > 0 ? (
-              productImgs.map((img, idx) => (
+            {filebase64.length < 4 && filebase64.length > 0 ? (
+              filebase64.map((img, idx) => (
                 <img
                   className="addImage-img"
                   key={idx}
                   src={img}
-                  alt={`img-${productImgs[idx]}`}
+                  alt={`img-${filebase64[idx]}`}
                 />
               ))
             ) : (
@@ -388,7 +417,7 @@ export default function ProductDescription() {
               <input
                 type="file"
                 id="selectFile"
-                onChange={handleFileChange}
+                onChange={(e) => convertFile(e.target.files)}
                 accept="image/*"
                 multiple
                 hidden
@@ -435,7 +464,9 @@ export default function ProductDescription() {
                   id="prod_cat_code"
                 >
                   {productCatCodeArray.map((code) => (
-                    <option key={code} value={code.toString()}>{code}</option>
+                    <option key={code} value={code.toString()}>
+                      {code}
+                    </option>
                   ))}
                 </select>
               </div>

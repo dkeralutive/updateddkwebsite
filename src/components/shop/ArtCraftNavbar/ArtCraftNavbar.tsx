@@ -3,14 +3,14 @@ import { Container, Nav, Navbar, Offcanvas } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import Data from "../../../Data.json";
 import mobileView from "../../../utilities/mobileView";
-import "./FashionNavbar.css";
+import "../FashionNavbar/FashionNavbar.css";
 import { useStoreContext } from "../../../contexts/StoreContext";
-
+import { FaUserSecret } from "react-icons/fa";
 
 export default function ArtCraftNavbar({ activeLink }: { activeLink: string }) {
   const [active, setActive] = useState(activeLink);
 
-  const { cartQty } = useStoreContext();
+  const { cartQty, userName } = useStoreContext();
 
   const navigate = useNavigate();
 
@@ -59,12 +59,20 @@ export default function ArtCraftNavbar({ activeLink }: { activeLink: string }) {
           </Offcanvas.Body>
         </Navbar.Offcanvas>
         <Navbar.Text className="nav-icons-container">
-          <img
-            src="/images/user.png"
-            alt="user"
-            onClick={() => navigate("/create-account")}
-          />
-          <img src="/images/heart.png" alt="wishlist" />
+          {!userName && (
+            <img
+              src="/images/user.png"
+              alt="user"
+              onClick={() => navigate("/create-account")}
+            />
+          )}
+
+          {userName && (
+            <FaUserSecret
+              className="user-icon"
+              onClick={() => navigate("/user-profile/" + userName)}
+            />
+          )}
           <img
             src="/images/lock.png"
             alt="lock"
@@ -77,4 +85,3 @@ export default function ArtCraftNavbar({ activeLink }: { activeLink: string }) {
     </Navbar>
   );
 }
-

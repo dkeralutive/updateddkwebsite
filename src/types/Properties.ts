@@ -7,6 +7,11 @@ export interface NoOfPropertiesByCatProp {
 }
 
 
+export interface ResponseDto {
+    code: string;
+    message: string;
+  }
+
 export interface PropertyResponseProps {
   id: number;
   amount: number;
@@ -27,10 +32,7 @@ export interface PropertyResponseProps {
 }
 
 export interface TotalNoOfPropertiesResponseProps {
-  responseDto: {
-    code: string;
-    message: string;
-  };
+  responseDto: ResponseDto;
   productDescriptionDtoList: PropertyResponseProps[];
   productDescriptionDto: PropertyResponseProps;
   values: NoOfPropertiesByCatProp;

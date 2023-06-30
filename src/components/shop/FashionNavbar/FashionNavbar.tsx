@@ -1,17 +1,16 @@
 import { useState } from "react";
 import { Container, Nav, Navbar, Offcanvas } from "react-bootstrap";
+import { FaUserSecret } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import Data from "../../../Data.json";
 import { useStoreContext } from "../../../contexts/StoreContext";
 import mobileView from "../../../utilities/mobileView";
 import "./FashionNavbar.css";
 
-
-
 export default function FashionNavbar({ activeLink }: { activeLink: string }) {
   const [active, setActive] = useState(activeLink);
 
-  const { cartQty } = useStoreContext();
+  const { cartQty, userName } = useStoreContext();
 
   const navigate = useNavigate();
   return (
@@ -59,16 +58,21 @@ export default function FashionNavbar({ activeLink }: { activeLink: string }) {
           </Offcanvas.Body>
         </Navbar.Offcanvas>
         <Navbar.Text className="nav-icons-container">
-          <img
-            src="/images/user.png"
-            alt="user"
-            onClick={() => navigate("/create-account")}
-          />
-          <img
-            src="/images/heart.png"
-            alt="wishlist"
-            onClick={() => navigate("/order")}
-          />
+          {!userName && (
+            <img
+              src="/images/user.png"
+              alt="user"
+              onClick={() => navigate("/create-account")}
+            />
+          )}
+
+          {userName && (
+            <FaUserSecret
+              className="user-icon"
+              onClick={() => navigate("/user-profile/" + userName)}
+            />
+          )}
+
           <img
             src="/images/lock.png"
             alt="lock"
