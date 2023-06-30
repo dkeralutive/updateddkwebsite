@@ -102,7 +102,7 @@ export default function ProductDescription() {
 
   // ** Welcome context contextValues
   const {
-    productImgs,
+    // productImgs,
     setProductImgs,
     productDescription,
     setProductDescription,
@@ -178,7 +178,7 @@ export default function ProductDescription() {
       requestOptions
     )
       .then((response) => response.json())
-      .then((result) => setProductDescription(result.productDescriptionDtoList))
+      .then(() => setProductDescription(.productDescriptionDtoList))
       .catch((error) => console.log("error", error));
   }
 
@@ -245,8 +245,8 @@ export default function ProductDescription() {
       requestOptions
     )
       .then((response) => response.json())
-      .then((result) => {
-        console.log(result)
+      .then(() => {
+        console.log()
         form.reset();
         setProductImgs([]);
       })
@@ -394,7 +394,7 @@ export default function ProductDescription() {
               <input
                 type="file"
                 id="selectFile"
-                onChange={handleFileChange}
+                onChange={ () => handleFileChange()}
                 accept="image/*"
                 multiple
                 hidden
