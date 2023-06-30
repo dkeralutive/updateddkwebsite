@@ -178,7 +178,7 @@ export default function ProductDescription() {
       requestOptions
     )
       .then((response) => response.json())
-      .then(() => setProductDescription(.productDescriptionDtoList))
+      .then((res:any) => setProductDescription(res.productDescriptionDtoList))
       .catch((error) => console.log("error", error));
   }
 
