@@ -194,7 +194,7 @@ export default function ProductDescription() {
     const formdata = new FormData();
 
     if (fileInput) {
-      fileInput.forEach((img, idx) =>
+      fileInput.forEach((img: any, idx : any) =>
         formdata.append("files", img, fileInput[idx].name)
       );
     }
