@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import "src/pages/General/UserProfile/UserProfile.css";
+import "../../../pages/General/UserProfile/UserProfile.css";
 import mobileView from "../../../utilities/mobileView";
 
 interface UserCardProps {
