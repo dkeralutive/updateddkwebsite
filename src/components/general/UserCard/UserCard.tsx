@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import "../../../pages/General/UserProfile/UserProfile.css";
+import "../../../pages/general/UserProfile/UserProfile.css";
 import mobileView from "../../../utilities/mobileView";
 
 interface UserCardProps {
@@ -11,7 +11,7 @@ export default function UserCard({ title, subtitle }: UserCardProps) {
   return (
     <Link
       to={title.trim().toLowerCase().replace(" ", "-")}
-      className="userCard-container"
+      className="userCard__container"
     >
       <div>
         <h2>{title}</h2>
